@@ -15,7 +15,7 @@ const adminAuth=(roleIs)=>{
                 const adminInfo=jwt.verify(token,process.env.JWT_SECRECT);
                 
                 if(roleIs.includes(Roles.owner) && adminInfo.password==process.env.Owner_Password&&adminInfo.username==process.env.Owner_Name){
-    
+                   req.AdminId=adminInfo;     
                     next()
                 }
                 else{
@@ -29,6 +29,7 @@ const adminAuth=(roleIs)=>{
                     error: true,
                     message: err.message,
                 });
+                // res.json(false);
             }
     }
 }

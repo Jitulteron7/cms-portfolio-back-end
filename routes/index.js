@@ -11,23 +11,34 @@ const jwt=require("jsonwebtoken")
 // 2 owner
 router.use("/admin",ownerRouter);
 
-router.get("/admin/check/",(req,res,next)=>{
+router.get("/admin/check/",async (req,res,next)=>{
             
-    if(req.cookies.authorization!=null){
-        const token=req.cookies.authorization;
-        const adminInfo=jwt.verify(token,process.env.JWT_SECRECT);
-        adminInfo.password = null;
-        console.log(adminInfo,"hjitul");
-        if(adminInfo.message=="jwt expired"){
-            res.end();
-        }
-         else{
-             res.json("jitul");
+    try{
+        if(req.cookies.authorization!=null){
+            const token=req.cookies.authorization;
+            
+            const adminInfo=jwt.verify(token,process.env.JWT_SECRECT);
+            // console.log(adminInfo);
+            adminInfo.password = null;
+            
+            if(adminInfo.message=="jwt expired"){
+                
+                res.end();
             }
+             else{
+                 res.json(adminInfo);
+                }
+        }
+        else{
+            res.json(false);
+        }   
+    }catch(e){
+        if(e){
+            res.json(false);
+            console.log("error in here");
+        }
+        
     }
-    else{
-        res.json(false);
-    }   
 });
 router.get("/admin/logout",(req,res,next)=>{
     res.clearCookie("authorization");
@@ -42,7 +53,7 @@ router.get("/admin/dashboard/",adminAuth(Roles.owner),dashBoard.dashBoard);
 router.post("/admin/dashboard/editor",adminAuth(Roles.owner),blog.EditorPost);
 router.get("/admin/dashboard/allcontents",blog.ContentGet);
 router.post("/admin/dashboard/delete/content",adminAuth(Roles.owner),blog.DeteteContent);
-router.post("/oneContent/view",adminAuth(Roles.owner),blog.ViewContent);
+router.post("/oneContent/view",blog.ViewContent);
 router.post("/admin/dashboard/edit/content",adminAuth(Roles.owner),blog.EditContent);
 // error handeling 
 // router.use((error,req,res,next)=>{
