@@ -15,7 +15,7 @@ const adminAuth=(roleIs)=>{
                 const adminInfo=jwt.verify(token,process.env.JWT_SECRECT);
                 
                 if(roleIs.includes(Roles.owner) && adminInfo.password==process.env.Owner_Password&&adminInfo.username==process.env.Owner_Name){
-    
+                    req.AdminId={password:process.env.Owner_Password,username:process.env.Owner_Name};    
                     next()
                 }
                 else{

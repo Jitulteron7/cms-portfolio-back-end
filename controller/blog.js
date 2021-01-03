@@ -2,14 +2,18 @@ const Blog =require("../model/blog");
 
 
 exports.EditorPost= async(req,res,next)=>{
-    const {title,description,banner,blogType}=req.body;
+    const {title,description,banner,time,readTime}=req.body;
+    const author=req.AdminId;
+    
     try{
             
             let blog=new Blog({
                 title,
                 description,
                 banner,
-                blogType
+                time,
+                author:author.username,
+                readTime
             });
             
             blog.save().then(data=>{

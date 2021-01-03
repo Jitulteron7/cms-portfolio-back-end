@@ -14,6 +14,22 @@ const blogSchema=new mongoose.Schema({
         type:String,
         // required: true
     },
+    time: {
+        type:String,
+
+    },
+    readTime:{
+        type:String,
+        
+    },
+    // version 1
+    author:{
+        type:String,
+    },
+    // version 2
+    // author:{
+    //     type:mongoose.isValidObjectId
+    // },
     description:{
         type:String,
     },
@@ -49,3 +65,13 @@ blogSchema.pre("save",function(next){
 
 const Blog=mongoose.model("Blog",blogSchema);
 module.exports = Blog;
+
+
+
+
+
+
+
+
+
+
