@@ -22,8 +22,8 @@ exports.ownerLogin=async (req,res,next)=>{
             
             res.cookie("authorization",token.toString(),{
                 httpOnly:true,
-                // maxAge:24*60*60*1000,
-                maxAge:100*1000
+                maxAge:24*60*60*1000,
+                // maxAge:100*1000
             });
 
             res.json({username:username,password:null});

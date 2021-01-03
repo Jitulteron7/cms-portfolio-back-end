@@ -12,17 +12,17 @@ const jwt=require("jsonwebtoken")
 router.use("/admin",ownerRouter);
 
 router.get("/admin/check/",(req,res,next)=>{
-            
+            // console.log(req.cookies.authorization);
     if(req.cookies.authorization!=null){
         const token=req.cookies.authorization;
         const adminInfo=jwt.verify(token,process.env.JWT_SECRECT);
         adminInfo.password = null;
-        console.log(adminInfo,"hjitul");
+        // console.log(adminInfo,"hjitul");
         if(adminInfo.message=="jwt expired"){
             res.end();
         }
          else{
-             res.json("jitul");
+             res.json(adminInfo);
             }
     }
     else{
@@ -42,7 +42,7 @@ router.get("/admin/dashboard/",adminAuth(Roles.owner),dashBoard.dashBoard);
 router.post("/admin/dashboard/editor",adminAuth(Roles.owner),blog.EditorPost);
 router.get("/admin/dashboard/allcontents",blog.ContentGet);
 router.post("/admin/dashboard/delete/content",adminAuth(Roles.owner),blog.DeteteContent);
-router.post("/oneContent/view",adminAuth(Roles.owner),blog.ViewContent);
+router.post("/oneContent/view",blog.ViewContent);
 router.post("/admin/dashboard/edit/content",adminAuth(Roles.owner),blog.EditContent);
 // error handeling 
 // router.use((error,req,res,next)=>{

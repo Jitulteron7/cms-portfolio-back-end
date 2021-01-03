@@ -16,8 +16,8 @@ app.use(
     session({
       secret: "secret_passcode",
       cookie: {
-        // maxAge:24*60*60*1000,
-        maxAge:100*1000,
+        maxAge:24*60*60*1000,
+        // maxAge:100*1000,
         httpOnly:true
       },
       resave: false,
